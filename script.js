@@ -3,8 +3,9 @@ let finalScore;
 let lives;
 var canvas;
 var canvasContext;
-let snakeX = 50;
-let snakeY = 50;
+let snake = {x: 50, y:50};
+let apple = { x: 200, y:200};
+
 
 function snakeLoad() {
 	console.log("Hello world!");
@@ -17,68 +18,50 @@ function snakeLoad() {
     }, 1000/framesPerSecond);
 }
 
-function moveEverything(){
-    snakeX = snakeX + 10;
+document.addEventListener('keydown', function(event) {
+    //left
+    if(event.keyCode == 37) {
+        snake.x -= 10;
+    }
+    //top
+    else if(event.keyCode == 38) {
+        snake.y -= 10;
+    }
+    //right
+    else if(event.keyCode == 39) {
+        snake.x += 10;
+    }
+    //bottom
+    else if(event.keyCode == 40) {
+        snake.y += 10;
+    }
+    if([32, 37, 38, 39, 40].indexOf(event.keyCode) > -1) {
+        event.preventDefault();
+    }
+});
 
-    document.addEventListener('keydown', function(event) {
-        //left
-        if(event.keyCode == 37) {
-            snakeX -= 10;
-        }
-        //top
-        else if(event.keyCode == 38) {
-            snakeY -= 10;
-        }
-        //right
-        else if(event.keyCode == 39) {
-            snakeX += 10;
-        }
-        //bottom
-        else if(event.keyCode == 40) {
-            snakeY += 10;
-        }
-    });
+
+function moveEverything(){
+    snake.x = snake.x + 10;
 }
+
+
+
+
 function drawGame(){
     canvasContext.fillStyle = 'black';
 	canvasContext.fillRect(0,0,canvas.width,canvas.height);
 	canvasContext.fillStyle = 'red';
-	canvasContext.fillRect(200,200,10,10);
+	canvasContext.fillRect(apple.x,apple.y,10,10); //need to store red block as apple
 	canvasContext.fillStyle = 'green';
-    canvasContext.fillRect(snakeX,snakeY,20,15);
+    canvasContext.fillRect(snake.x,snake.y,20,15); //need to store green block as snake
+
+    
 }
+
 
 snakeLoad();
 drawGame();
 
 
-// getKeyAndMove();
-// function getKeyAndMove(e){				
-//     let key_code=e.keyCode; // don't really get the which part of this yet
-//     switch(key_code){
-//         case 37: //left arrow key
-//             moveLeft();
-//             break;
-//         case 38: //Up arrow key
-//             moveUp();
-//             break;
-//         case 39: //right arrow key
-//             moveRight();
-//             break;
-//         case 40: //down arrow key
-//             moveDown();
-//             break;	
-//     }
-// }
-// function moveLeft() {
-//     snakeX = snakeX - 10;
-// }
-// function moveRight(){
-//     snakeX = snakeX + 10;
-// }
-// function moveUp(){
-//     snakeX = snakeY + 10;
-// }
-// function moveDown(){
-//     snakeX = snakeY - 10;
-// }
+
