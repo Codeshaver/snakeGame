@@ -4,6 +4,7 @@ let lives;
 var canvas;
 var canvasContext;
 let snake = {x: 50, y:50};
+let snakeSpeed = {x:5, y:0}
 let apple = { x: 200, y:200};
 
 
@@ -26,6 +27,7 @@ document.addEventListener('keydown', function(event) {
     //top
     else if(event.keyCode == 38) {
         snake.y -= 10;
+    
     }
     //right
     else if(event.keyCode == 39) {
@@ -42,22 +44,42 @@ document.addEventListener('keydown', function(event) {
 
 
 function moveEverything(){
-    snake.x = snake.x + 10;
+    snake.x = snake.x + snakeSpeed.x;
+    if(snake.x>canvas.width) {
+        // snakeSpeed.x = -snakeSpeed.x; // bounce off wall
+        snakeDeath();
+    }
+    if(snake.x<=0){
+        // snakeSpeed.x = -snakeSpeed.x;// bounce off ceiling
+        snakeDeath();    
+    }
 }
 
-
-
-
+function colorRect(leftX,topY,width,height,drawColor){
+    canvasContext.fillStyle = drawColor;
+    canvasContext.fillRect(leftX,topY,width,height,drawColor);
+}
 function drawGame(){
-    canvasContext.fillStyle = 'black';
-	canvasContext.fillRect(0,0,canvas.width,canvas.height);
-	canvasContext.fillStyle = 'red';
-	canvasContext.fillRect(apple.x,apple.y,10,10); //need to store red block as apple
-	canvasContext.fillStyle = 'green';
-    canvasContext.fillRect(snake.x,snake.y,20,15); //need to store green block as snake
+    colorRect(0,0,canvas.width,canvas.height, "black"); // canvas
+    colorRect(apple.x,apple.y,10,10, "red"); // apple
+    colorRect(snake.x,snake.y,20,15, "green"); // snake
 
-    
 }
+
+function snakeDeath() {
+    snake.x = canvas.width/2;
+    snake.y = canvas.height/2;
+}
+
+
+// function drawGame(){
+//     canvasContext.fillStyle = 'black';
+// 	canvasContext.fillRect(0,0,canvas.width,canvas.height);
+// 	canvasContext.fillStyle = 'red';
+// 	canvasContext.fillRect(apple.x,apple.y,10,10); //need to store red block as apple
+// 	canvasContext.fillStyle = 'green';
+//     canvasContext.fillRect(snake.x,snake.y,20,15); //need to store green block as snake  
+// }
 
 
 snakeLoad();
