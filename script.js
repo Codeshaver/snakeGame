@@ -4,8 +4,10 @@ let lives;
 var canvas;
 var canvasContext;
 let snake = {x: 50, y:50};
-let snakeSpeed = {x:5, y:0}
+let snakeSpeed = {x:0, y:0}
 let apple = { x: 200, y:200};
+let dx= 0;
+let dy= 0;
 
 
 function snakeLoad() {
@@ -22,20 +24,28 @@ function snakeLoad() {
 document.addEventListener('keydown', function(event) {
     //left
     if(event.keyCode == 37) {
-        snake.x -= 10;
+        snake.x -= -2*dx;
+        dx = -1
+        dy = 0;
     }
     //top
     else if(event.keyCode == 38) {
-        snake.y -= 10;
+        snake.y -= -2*dy;
+        dy = -1
+        dx = 0;
     
     }
     //right
     else if(event.keyCode == 39) {
-        snake.x += 10;
+        snake.x += 2*dx;
+        dx = 1
+        dy = 0;
     }
     //bottom
     else if(event.keyCode == 40) {
-        snake.y += 10;
+        snake.y += 2*dy;
+        dy = 1
+        dx = 0;
     }
     if([32, 37, 38, 39, 40].indexOf(event.keyCode) > -1) {
         event.preventDefault();
@@ -44,7 +54,8 @@ document.addEventListener('keydown', function(event) {
 
 
 function moveEverything(){
-    snake.x = snake.x + snakeSpeed.x;
+    snake.x += dx;
+    snake.y += dy;
     if(snake.x>canvas.width) {
         // snakeSpeed.x = -snakeSpeed.x; // bounce off wall
         snakeDeath();
@@ -52,7 +63,15 @@ function moveEverything(){
     if(snake.x<=0){
         // snakeSpeed.x = -snakeSpeed.x;// bounce off ceiling
         snakeDeath();    
+    if(snake.y<0) {
+        // snakeSpeed.x = -snakeSpeed.x; // bounce off wall
+        snakeDeath();
     }
+    if(snake.y>=canvas.height){
+        // snakeSpeed.x = -snakeSpeed.x;// bounce off ceiling
+        snakeDeath(); 
+    }
+}
 }
 
 function colorRect(leftX,topY,width,height,drawColor){
@@ -84,6 +103,7 @@ function snakeDeath() {
 
 snakeLoad();
 drawGame();
+
 
 
 
