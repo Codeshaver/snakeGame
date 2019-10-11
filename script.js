@@ -1,11 +1,14 @@
-let score;
 let finalScore;
 let lives;
-var canvas;
-var canvasContext;
-let snake = {x: 50, y:50};
-let snakeSpeed = {x:5, y:0}
-let apple = { x: 200, y:200};
+let canvas;
+let canvasContext;
+let score = 0;
+let snake = [{x:0,y:0}]
+let apple = [{x:20,y:20}]
+let grid = 10;
+let dx=dy=0;
+let tail = []
+let i = 0;
 
 
 function snakeLoad() {
@@ -22,20 +25,36 @@ function snakeLoad() {
 document.addEventListener('keydown', function(event) {
     //left
     if(event.keyCode == 37) {
-        snake.x -= 10;
+        // if(snakeX==appleX && snakeY==appleY){
+        //     colorRect(snakeX+grid,snakeY,grid,grid, "green"); // snake
+        // }
+        dx = -10;
+        dy = 0;
     }
     //top
     else if(event.keyCode == 38) {
-        snake.y -= 10;
+            // if(snakeX==appleX && snakeY==appleY){
+            //     colorRect(snakeX,snakeY-grid,grid,grid, "green"); // snake tail
+            // }
+        
+        dy = -10;
+        dx = 0;
     
     }
     //right
     else if(event.keyCode == 39) {
-        snake.x += 10;
+        // if(snakeX==appleX && snakeY==appleY){
+        //     colorRect(snakeX-grid,snakeY,grid,grid, "green"); // snake tail
+        // }
+        dx = 10;
+        dy = 0;
     }
     //bottom
     else if(event.keyCode == 40) {
-        snake.y += 10;
+        // if(snakeX==appleX && snakeY==appleY){
+        // }
+        dy = 10;
+        dx = 0;
     }
     if([32, 37, 38, 39, 40].indexOf(event.keyCode) > -1) {
         event.preventDefault();
@@ -44,15 +63,27 @@ document.addEventListener('keydown', function(event) {
 
 
 function moveEverything(){
-    snake.x = snake.x + snakeSpeed.x;
+    snake[i].x += dx;
+    snake[i].y += dy;
+    for(i=0; i<snake.length; i++) {
+        if(snake.x==apple.x && snake.y==apple.y){
+            snake.push({x:snake[snake.length].x-grid, y:snake[snake.length].y-grid})
+                apple = [{x:Math.floor(Math.random()*canvas.width), y:Math.floor(Math.random()*canvas.height)}]
+        }
+
     if(snake.x>canvas.width) {
-        // snakeSpeed.x = -snakeSpeed.x; // bounce off wall
         snakeDeath();
     }
     if(snake.x<=0){
-        // snakeSpeed.x = -snakeSpeed.x;// bounce off ceiling
-        snakeDeath();    
+        snakeDeath();
+    }    
+    if(snake.y<0) {
+        snakeDeath();
     }
+    if(snake>=canvas.height){
+        snakeDeath(); 
+    }
+}
 }
 
 function colorRect(leftX,topY,width,height,drawColor){
@@ -61,29 +92,14 @@ function colorRect(leftX,topY,width,height,drawColor){
 }
 function drawGame(){
     colorRect(0,0,canvas.width,canvas.height, "black"); // canvas
-    colorRect(apple.x,apple.y,10,10, "red"); // apple
-    colorRect(snake.x,snake.y,20,15, "green"); // snake
-
+    colorRect(apple[i].x,apple[i].y,grid,grid, "red"); // apple
+    colorRect(snake[i].x,snake[i].y,grid,grid, "green"); // snake
 }
 
 function snakeDeath() {
-    snake.x = canvas.width/2;
-    snake.y = canvas.height/2;
+    snake[i].x = canvas.width/2;
+    snake[i].y = canvas.height/2;
 }
-
-
-// function drawGame(){
-//     canvasContext.fillStyle = 'black';
-// 	canvasContext.fillRect(0,0,canvas.width,canvas.height);
-// 	canvasContext.fillStyle = 'red';
-// 	canvasContext.fillRect(apple.x,apple.y,10,10); //need to store red block as apple
-// 	canvasContext.fillStyle = 'green';
-//     canvasContext.fillRect(snake.x,snake.y,20,15); //need to store green block as snake  
-// }
-
 
 snakeLoad();
 drawGame();
-
-
-
