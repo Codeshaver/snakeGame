@@ -65,26 +65,26 @@ document.addEventListener('keydown', function(event) {
 function moveEverything(){
     snake[i].x += dx;
     snake[i].y += dy;
-    for(i=0; i<snake.length; i++) {
-        if(snake.x==apple.x && snake.y==apple.y){
-            snake.push({x:snake[snake.length].x-grid, y:snake[snake.length].y-grid})
-                apple = [{x:Math.floor(Math.random()*canvas.width), y:Math.floor(Math.random()*canvas.height)}]
-        }
+    // for(i=0; i<snake.length; i++) {
+    //     if(snake.x==apple.x && snake.y==apple.y){
+    //         snake.push({x:snake[snake.length].x-grid, y:snake[snake.length].y-grid})
+    //             apple = [{x:Math.floor(Math.random()*canvas.width), y:Math.floor(Math.random()*canvas.height)}]
+    //     }
 
-    if(snake.x>canvas.width) {
+    if(snake[i].x>canvas.width) {
         snakeDeath();
     }
-    if(snake.x<=0){
+    if(snake[i].x<=0){
         snakeDeath();
     }    
-    if(snake.y<0) {
+    if(snake[i].y<0) {
         snakeDeath();
     }
-    if(snake>=canvas.height){
+    if(snake[i].y>=canvas.height){
         snakeDeath(); 
     }
 }
-}
+
 
 function colorRect(leftX,topY,width,height,drawColor){
     canvasContext.fillStyle = drawColor;
