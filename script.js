@@ -9,6 +9,7 @@ let grid = 10;
 let dx=dy=0;
 let tail = []
 let i = 0;
+const snakeHead = snake[0]
 
 
 function snakeLoad() {
@@ -25,34 +26,22 @@ function snakeLoad() {
 document.addEventListener('keydown', function(event) {
     //left
     if(event.keyCode == 37) {
-        // if(snakeX==appleX && snakeY==appleY){
-        //     colorRect(snakeX+grid,snakeY,grid,grid, "green"); // snake
-        // }
         dx = -1;
         dy = 0;
     }
     //top
     else if(event.keyCode == 38) {
-            // if(snakeX==appleX && snakeY==appleY){
-            //     colorRect(snakeX,snakeY-grid,grid,grid, "green"); // snake tail
-            // }
-        
         dy = -1;
         dx = 0;
     
     }
     //right
     else if(event.keyCode == 39) {
-        // if(snakeX==appleX && snakeY==appleY){
-        //     colorRect(snakeX-grid,snakeY,grid,grid, "green"); // snake tail
-        // }
         dx = 1;
         dy = 0;
     }
     //bottom
     else if(event.keyCode == 40) {
-        // if(snakeX==appleX && snakeY==appleY){
-        // }
         dy = 1;
         dx = 0;
     }
@@ -65,12 +54,11 @@ document.addEventListener('keydown', function(event) {
 function moveEverything(){
     snake[i].x += dx;
     snake[i].y += dy;
-    // for(i=0; i<snake.length; i++) {
+    for(i=0; i<snake.length; i++) { // iteration to add new snake object to array if apple is eaten
         if(snake[i].x==apple.x && snake[i].y==apple.y){
-            // snake.push({x:snake[snake.length].x-grid, y:snake[snake.length].y-grid})
+            snake.push({x:snake[snake.length].x+=dx*grid, y:snake[snake.length].y+=dy*grid}) //trying to push new snake object into array using dx and dy to stipulate placement
                 apple = {x:Math.floor(Math.random()*canvas.width), y:Math.floor(Math.random()*canvas.height)}
 
-        }
     if(snake[i].x>canvas.width) {
         snakeDeath();
     }
@@ -91,9 +79,9 @@ function colorRect(leftX,topY,width,height,drawColor){
     canvasContext.fillRect(leftX,topY,width,height,drawColor);
 }
 function drawGame(){
-    colorRect(0,0,canvas.width,canvas.height, "black"); // canvas
-    colorRect(apple.x,apple.y,grid,grid, "red"); // apple
-    colorRect(snake[i].x,snake[i].y,grid,grid, "green"); // snake
+    colorRect(0,0,canvas.width,canvas.height, "black"); 
+    colorRect(apple.x,apple.y,grid,grid, "red"); 
+    colorRect(snake[i].x,snake[i].y,grid,grid, "green"); 
 }
 
 function snakeDeath() {
