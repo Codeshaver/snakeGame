@@ -7,9 +7,9 @@ let snake = [{x:0,y:0}]
 let apple = {x:20,y:20}
 let grid = 10;
 let dx=dy=0;
-let tail = []
+// let tail = []
 let i = 0;
-const snakeHead = snake[0]
+// const snakeHead = snake[0]
 
 
 function snakeLoad() {
@@ -71,7 +71,10 @@ function moveEverything(){
     if(snake[i].y>=canvas.height){
         snakeDeath(); 
     }
+        }
+    }
 }
+    
 
 
 function colorRect(leftX,topY,width,height,drawColor){
