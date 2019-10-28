@@ -30,18 +30,18 @@ document.addEventListener('keydown', function(event) {
         dy = 0;
     }
     //top
-    else if(event.keyCode == 38) {
+    if(event.keyCode == 38) {
         dy = -1;
         dx = 0;
     
     }
     //right
-    else if(event.keyCode == 39) {
+    if(event.keyCode == 39) {
         dx = 1;
         dy = 0;
     }
     //bottom
-    else if(event.keyCode == 40) {
+    if(event.keyCode == 40) {
         dy = 1;
         dx = 0;
     }
@@ -52,12 +52,15 @@ document.addEventListener('keydown', function(event) {
 
 
 function moveEverything(){
+    let i=0;
+    let grid = 10;
+    let snakeHead = snake[0]
     snake[i].x += dx;
     snake[i].y += dy;
     for(i=0; i<snake.length; i++) { // iteration to add new snake object to array if apple is eaten
         if(snake[i].x==apple.x && snake[i].y==apple.y){
-            snake.push({x:snake[snake.length].x+=dx*grid, y:snake[snake.length].y+=dy*grid}) //trying to push new snake object into array using dx and dy to stipulate placement
-                apple = {x:Math.floor(Math.random()*canvas.width), y:Math.floor(Math.random()*canvas.height)}
+            // snake.push({x:snake[snake.length].x+=dx*grid, y:snake[snake.length].y+=dy*grid}) //trying to push new snake object into array using dx and dy to stipulate placement
+                apple = {x:(Math.floor(Math.random()*canvas.width)-grid), y:(Math.floor(Math.random()*canvas.height))-grid}
 
     if(snake[i].x>canvas.width) {
         snakeDeath();
@@ -82,6 +85,7 @@ function colorRect(leftX,topY,width,height,drawColor){
     canvasContext.fillRect(leftX,topY,width,height,drawColor);
 }
 function drawGame(){
+    let i = 0;
     colorRect(0,0,canvas.width,canvas.height, "black"); 
     colorRect(apple.x,apple.y,grid,grid, "red"); 
     colorRect(snake[i].x,snake[i].y,grid,grid, "green"); 
