@@ -3,7 +3,7 @@ let lives;
 let canvas;
 let canvasContext;
 let score = 0;
-let snake = [{x:0,y:0},{x:10,y:0},{x:20,y:0},{x:30,y:0}]
+let snake = [{x:50,y:40},{x:60,y:50},{x:70,y:60},{x:80,y:70}]
 let apple = {x:20,y:20}
 let grid = 10;
 let dx=dy=0;
@@ -22,6 +22,34 @@ function snakeLoad() {
     }, 1000/framesPerSecond);
 }
 
+// function drawSnakePart(snake) {
+//     colorRect(snake.x, snake.y, grid, grid, "green");
+//     // canvasContext.strokeRect(snake.x, snake.y, grid, grid);
+  
+//   }
+  
+//   function drawSnake() {
+//     snake.forEach(drawSnakePart);
+//   }
+
+
+function colorRect(leftX,topY,width,height,drawColor){
+    canvasContext.fillStyle = drawColor;
+    canvasContext.fillRect(leftX,topY,width,height,drawColor);
+}
+function drawGame(){
+    let i = 0;
+    colorRect(0,0,canvas.width,canvas.height, "black"); 
+    colorRect(apple.x,apple.y,grid,grid, "red"); 
+    for(i=0; i<snake.length; i++) {
+        function drawSnake(){
+            colorRect(snake[i].x,snake[i].y,grid,grid, "green");
+            snake.forEach(drawSnake);
+        } 
+    drawSnake();
+}
+}
+
 document.addEventListener('keydown', function(event) {
     const goingUp = dy === -10;
     const goingDown = dy === 10;
@@ -32,7 +60,7 @@ document.addEventListener('keydown', function(event) {
         dx = -10;
         dy = 0;
     }
-    //top
+    //up
     if(event.keyCode == 38 && !goingDown) {
         dy = -10;
         dx = 0;
@@ -43,7 +71,7 @@ document.addEventListener('keydown', function(event) {
         dx = 10;
         dy = 0;
     }
-    //bottom
+    //down
     if(event.keyCode == 40 && !goingUp) {
         dy = 10;
         dx = 0;
@@ -66,39 +94,30 @@ function moveEverything(){
                 apple = {x:(Math.floor(Math.random()*canvas.width)-grid), y:(Math.floor(Math.random()*canvas.height))-grid}
     
 
-    // if(snakeHead[i].x>canvas.width) {
-    //     snakeDeath();
-    // }
-    // if(snakeHead[i].x<=0){
-    //     snakeDeath();
-    // }    
-    // if(snakeHead[i].y<0) {
-    //     snakeDeath();
-    // }
-    // if(snakeHead[i].y>=canvas.height){
-    //     snakeDeath(); 
-    // }
+    if(snakeHead.x>canvas.width) {
+        snakeDeath();
+    }
+    if(snakeHead.x<=0){
+        snakeDeath();
+    }    
+    if(snakeHead.y<0) {
+        snakeDeath();
+    }
+    if(snakeHead.y>=canvas.height){
+        snakeDeath(); 
+    }
         }
     }
 }
-    
 
 
-function colorRect(leftX,topY,width,height,drawColor){
-    canvasContext.fillStyle = drawColor;
-    canvasContext.fillRect(leftX,topY,width,height,drawColor);
-}
-function drawGame(){
-    let i = 0;
-    colorRect(0,0,canvas.width,canvas.height, "black"); 
-    colorRect(apple.x,apple.y,grid,grid, "red"); 
-    colorRect(snake[i].x,snake[i].y,grid,grid, "green"); 
-}
 
-// function snakeDeath() {
+function snakeDeath() {
+    window.location.reload();
 //     snake[i].x = 70;
 //     snake[i].y = 20;
-// }
+}
 
+// drawSnakePart();
 snakeLoad();
 drawGame();
