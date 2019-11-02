@@ -15,23 +15,12 @@ function snakeLoad() {
 	console.log("Hello world!");
 	canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
-    let framesPerSecond = 15;
+    let framesPerSecond = 10;
     setInterval(function(){
         moveEverything();
         drawGame();
     }, 1000/framesPerSecond);
 }
-
-// function drawSnakePart(snake) {
-//     colorRect(snake.x, snake.y, grid, grid, "green");
-//     // canvasContext.strokeRect(snake.x, snake.y, grid, grid);
-  
-//   }
-  
-//   function drawSnake() {
-//     snake.forEach(drawSnakePart);
-//   }
-
 
 function colorRect(leftX,topY,width,height,drawColor){
     canvasContext.fillStyle = drawColor;
@@ -42,12 +31,8 @@ function drawGame(){
     colorRect(0,0,canvas.width,canvas.height, "black"); 
     colorRect(apple.x,apple.y,grid,grid, "red"); 
     for(i=0; i<snake.length; i++) {
-        function drawSnake(){
             colorRect(snake[i].x,snake[i].y,grid,grid, "green");
-            snake.forEach(drawSnake);
         } 
-    drawSnake();
-}
 }
 
 document.addEventListener('keydown', function(event) {
@@ -81,7 +66,6 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-
 function moveEverything(){
     let i=0;
     let grid = 10;
@@ -91,9 +75,8 @@ function moveEverything(){
     for(i=0; i<snake.length; i++) { 
         if(snakeHead.x==apple.x && snakeHead.y==apple.y){
             
-                apple = {x:(Math.floor(Math.random()*canvas.width)-grid), y:(Math.floor(Math.random()*canvas.height))-grid}
+            apple = {x:(Math.floor(Math.random()*canvas.width)-grid), y:(Math.floor(Math.random()*canvas.height))-grid*}
     
-
     if(snakeHead.x>canvas.width) {
         snakeDeath();
     }
@@ -114,10 +97,10 @@ function moveEverything(){
 
 function snakeDeath() {
     window.location.reload();
-//     snake[i].x = 70;
-//     snake[i].y = 20;
+    // snake[i].x = 70;
+    // snake[i].y = 20;
 }
 
-// drawSnakePart();
 snakeLoad();
 drawGame();
+
