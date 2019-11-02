@@ -4,7 +4,7 @@ let canvas;
 let canvasContext;
 let score = 0;
 let snake = [{x:50,y:40},{x:60,y:50},{x:70,y:60},{x:80,y:70}]
-let apple = {x:20,y:20}
+let apple = {x:40,y:40}
 let grid = 10;
 let dx=dy=0;
 let i = 0;
@@ -75,8 +75,8 @@ function moveEverything(){
     for(i=0; i<snake.length; i++) { 
         if(snakeHead.x==apple.x && snakeHead.y==apple.y){
             
-            apple = {x:(Math.floor(Math.random()*canvas.width)-grid), y:(Math.floor(Math.random()*canvas.height))-grid*}
-    
+            apple = {x:(Math.floor(Math.random()*canvas.width)-grid), y:(Math.floor(Math.random()*canvas.height)-grid)}
+        }
     if(snakeHead.x>canvas.width) {
         snakeDeath();
     }
@@ -90,7 +90,7 @@ function moveEverything(){
         snakeDeath(); 
     }
         }
-    }
+    
 }
 
 
