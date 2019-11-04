@@ -69,15 +69,22 @@ document.addEventListener('keydown', function(event) {
 function moveEverything(){
     let i=0;
     let grid = 10;
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
     const snakeHead = {x: snake[i].x+dx, y: snake[i].y+dy};
     snake.unshift(snakeHead);
     snake.pop();
     for(i=0; i<snake.length; i++) { 
         if(snakeHead.x==apple.x && snakeHead.y==apple.y){
             
-            apple = {x:(Math.floor(Math.random()*canvas.width)-grid), y:(Math.floor(Math.random()*canvas.height)-grid)}
+            apple = {x: getRandomInt(grid/10, canvas.width/10)*10, y: getRandomInt(grid/10, canvas.height/10)*10}
+            snake.push({x: snakeHead.x, y: snakeHead.y});
+            // console.log("added Piece:", snake[0]);
         }
-    if(snakeHead.x>canvas.width) {
+    if(snakeHead.x>=canvas.width) {
         snakeDeath();
     }
     if(snakeHead.x<=0){
@@ -103,4 +110,5 @@ function snakeDeath() {
 
 snakeLoad();
 drawGame();
+
 
