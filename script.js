@@ -1,14 +1,14 @@
 let finalScore;
-let lives;
+let score = 0;
 let canvas;
 let canvasContext;
-let score = 0;
 let snake = [{x:50,y:40},{x:60,y:50},{x:70,y:60},{x:80,y:70}]
 let apple = {x:40,y:40}
 let grid = 10;
 let dx=dy=0;
 let i = 0;
 const snakeHead = snake[0]
+
 
 
 function snakeLoad() {
@@ -64,6 +64,13 @@ document.addEventListener('keydown', function(event) {
     if([32, 37, 38, 39, 40].indexOf(event.keyCode) > -1) {
         event.preventDefault();
     }
+    if(event.keyCode==32) {
+        score = 0;
+        snake = [{x:50,y:40},{x:60,y:50},{x:70,y:60},{x:80,y:70}]
+        apple = {x:40,y:40}
+        dy = 0;
+        dx = 0;
+    }
 });
 
 function moveEverything(){
@@ -82,10 +89,17 @@ function moveEverything(){
             
             apple = {x: getRandomInt(grid/10, canvas.width/10)*10, y: getRandomInt(grid/10, canvas.height/10)*10}
             snake.push({x: snakeHead.x, y: snakeHead.y});
+            const newFood = snake.x==apple.x && snake.y==apple.y // generates new apple if on same place as snake
+            if(newFood){
+                apple = {x: getRandomInt(grid/10, canvas.width/10)*10, y: getRandomInt(grid/10, canvas.height/10)*10}
+            }
+            score++;
             // console.log("added Piece:", snake[0]);
         }
     if(snakeHead.x>=canvas.width) {
         snakeDeath();
+        // canvasContext.font = "30px Arial";
+        // canvasConext.fillText("Your Score:" score, 10, 50);
     }
     if(snakeHead.x<=0){
         snakeDeath();
@@ -96,7 +110,13 @@ function moveEverything(){
     if(snakeHead.y>=canvas.height){
         snakeDeath(); 
     }
-        }
+    // // // for(i=4; i<snake.length; i++){
+    // // //     if (snakeHead.x === snake[i].x && snakeHead.y === snake[i].y)
+    // // //     snakeDeath();
+    // // //     {
+    // //     }
+    // }
+}
     
 }
 
