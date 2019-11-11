@@ -89,12 +89,12 @@ function moveEverything(){
             
             apple = {x: getRandomInt(grid/10, canvas.width/10)*10, y: getRandomInt(grid/10, canvas.height/10)*10}
             snake.push({x: snakeHead.x, y: snakeHead.y});
-            const newFood = snake.x==apple.x && snake.y==apple.y // generates new apple if on same place as snake
+            const newFood = snake[i].x==apple.x && snake[i].y==apple.y // generates new apple if on same place as snake
             if(newFood){
                 apple = {x: getRandomInt(grid/10, canvas.width/10)*10, y: getRandomInt(grid/10, canvas.height/10)*10}
             }
-            score++;
-            // console.log("added Piece:", snake[0]);
+            score+=10;
+            document.getElementById("score").innerHTML= score;
         }
     if(snakeHead.x>=canvas.width) {
         snakeDeath();
@@ -110,13 +110,12 @@ function moveEverything(){
     if(snakeHead.y>=canvas.height){
         snakeDeath(); 
     }
-    // // // for(i=4; i<snake.length; i++){
-    // // //     if (snakeHead.x === snake[i].x && snakeHead.y === snake[i].y)
-    // // //     snakeDeath();
-    // // //     {
-    // //     }
+    // for(i=4; i<snake.length; i++)
+    // if(snakeHead.x === snake[i].x && snakeHead.y ===  snake[i].y) {
+    //     snakeDeath();
     // }
-}
+       
+    }
     
 }
 
@@ -124,9 +123,13 @@ function moveEverything(){
 
 function snakeDeath() {
     window.location.reload();
-    // snake[i].x = 70;
-    // snake[i].y = 20;
 }
+
+// if(snakeDeath){
+//     canvas = document.getElementById('gameCanvas2'); //trying to display score at death
+//     canvasContext = canvas.getContext('2d');
+//     fillStyle=getElementById("score")
+// }
 
 snakeLoad();
 drawGame();

@@ -1,3 +1,6 @@
 /* #gameCanvas {
     color: black;
 } */
+td{
+    align-content: space-between;
+}
